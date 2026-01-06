@@ -56,6 +56,8 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
 	});
 } else {
 	startBtn.disabled = true;
+	status.textContent = "Ошибка: Ваш браузер не поддерживает распознавание речи";
+	status.className = "status error";
 }
 
 function processCommand(text) {
