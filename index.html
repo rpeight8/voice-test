@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Voice Recognition</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<h1>Вместо точке и квадратиков??</h1>
+			<div class="list" id="list">
+				<div class="item">
+					<span class="item-name">берёза</span>
+					<span class="item-count" id="count-берёза">0</span>
+				</div>
+				<div class="item">
+					<span class="item-name">ясень</span>
+					<span class="item-count" id="count-ясень">0</span>
+				</div>
+				<div class="item">
+					<span class="item-name">сосна</span>
+					<span class="item-count" id="count-сосна">0</span>
+				</div>
+			</div>
+
+			<div class="controls">
+				<button id="startBtn">Говорить</button>
+			</div>
+
+			<div class="history-section">
+				<div class="history-header">
+					<h2>История</h2>
+					<div class="history-buttons">
+						<button id="undoBtn" class="history-btn" disabled>Отменить</button>
+						<button id="redoBtn" class="history-btn" disabled>Вернуть</button>
+					</div>
+				</div>
+				<div class="history-log" id="historyLog">
+					<div class="history-empty">Пока ничего не посчитали</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
