@@ -1,47 +1,86 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Voice Recognition</title>
-		<link rel="stylesheet" href="styles.css" />
+		<title>Minimal Copy</title>
+
+		<style>
+			body {
+				margin: 0;
+				height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background: #0d1117;
+				font-family: Arial, sans-serif;
+			}
+
+			button {
+				background: #21262d;
+				color: #fff;
+				border: 1px solid #30363d;
+				padding: 15px 40px;
+				font-size: 18px;
+				border-radius: 8px;
+				cursor: pointer;
+				transition: 0.2s ease;
+			}
+
+			button:hover {
+				background: #30363d;
+			}
+
+			button:active {
+				transform: scale(0.97);
+			}
+		</style>
 	</head>
 	<body>
-		<div class="container">
-			<h1>Вместо точке и квадратиков??</h1>
-			<div class="list" id="list">
-				<div class="item">
-					<span class="item-name">берёза</span>
-					<span class="item-count" id="count-берёза">0</span>
-				</div>
-				<div class="item">
-					<span class="item-name">ясень</span>
-					<span class="item-count" id="count-ясень">0</span>
-				</div>
-				<div class="item">
-					<span class="item-name">сосна</span>
-					<span class="item-count" id="count-сосна">0</span>
-				</div>
-			</div>
+		<button id="copyBtn">Copy</button>
 
-			<div class="controls">
-				<button id="startBtn">Говорить</button>
-			</div>
+		<script>
+			const button = document.getElementById("copyBtn");
+			const data =
+				"vless://64192639-2174-4e10-a549-7f75520d57f8@212.118.53.242:24726?type=tcp&encryption=none&security=reality&pbk=7NR6TY7fp1EG8JAebyEN43IXqJx_Veb9A0hibNxMGAQ&fp=chrome&sni=www.intel.com&sid=5bb4f1&spx=%2F&flow=xtls-rprx-vision#VP-TV-elrmbwk9";
 
-			<div class="history-section">
-				<div class="history-header">
-					<h2>История</h2>
-					<div class="history-buttons">
-						<button id="undoBtn" class="history-btn" disabled>Отменить</button>
-						<button id="redoBtn" class="history-btn" disabled>Вернуть</button>
-					</div>
-				</div>
-				<div class="history-log" id="historyLog">
-					<div class="history-empty">Пока ничего не посчитали</div>
-				</div>
-			</div>
-		</div>
+			async function copyText(text) {
+				// Modern API
+				if (navigator.clipboard && window.isSecureContext) {
+					return navigator.clipboard.writeText(text);
+				}
 
-		<script src="script.js"></script>
+				// Fallback
+				return new Promise((resolve, reject) => {
+					const textArea = document.createElement("textarea");
+					textArea.value = text;
+					textArea.style.position = "fixed";
+					textArea.style.left = "-9999px";
+					document.body.appendChild(textArea);
+					textArea.focus();
+					textArea.select();
+
+					try {
+						const successful = document.execCommand("copy");
+						document.body.removeChild(textArea);
+						successful ? resolve() : reject();
+					} catch (err) {
+						document.body.removeChild(textArea);
+						reject(err);
+					}
+				});
+			}
+
+			button.addEventListener("click", async () => {
+				try {
+					await copyText(data);
+					button.textContent = "Copied ✓";
+					setTimeout(() => (button.textContent = "Copy"), 1500);
+				} catch {
+					button.textContent = "Failed ✕";
+					setTimeout(() => (button.textContent = "Copy"), 1500);
+				}
+			});
+		</script>
 	</body>
 </html>
